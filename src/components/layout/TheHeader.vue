@@ -1,19 +1,19 @@
 <template>
   <header>
     <nav class="navbar container">
-      <h1 class="brand text-brand">TEAM Manager</h1>
+      <router-link to="/" class="brand text-brand">TEAM Manager</router-link>
       <ul class="navbar-inner">
         <li>
-          <a href="#">To Do</a>
+          <router-link to="/todo">To Do</router-link>
         </li>
         <li>
-          <a href="#">Example</a>
+          <router-link to="/">Example</router-link>
         </li>
         <li>
-          <a href="#">Example</a>
+          <router-link to="/">Example</router-link>
         </li>
         <li>
-          <a href="#">Example</a>
+          <router-link to="/">Example</router-link>
         </li>
       </ul>
       <section class="user-profile">
