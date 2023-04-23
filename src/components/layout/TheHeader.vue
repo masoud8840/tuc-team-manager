@@ -4,21 +4,21 @@
       <router-link to="/" class="brand text-brand">TEAM Manager</router-link>
       <ul class="navbar-inner">
         <li>
-          <router-link to="/todo">To Do</router-link>
+          <router-link to="/todo" class="text-light">To Do</router-link>
         </li>
         <li>
-          <router-link to="/">Example</router-link>
+          <router-link to="/example1" class="text-light">Example</router-link>
         </li>
         <li>
-          <router-link to="/">Example</router-link>
+          <router-link to="/example2" class="text-light">Example</router-link>
         </li>
         <li>
-          <router-link to="/">Example</router-link>
+          <router-link to="/example3" class="text-light">Example</router-link>
         </li>
       </ul>
       <section class="user-profile">
         <button>
-          <h5>Julie Jones</h5>
+          <h5 class="font-medium">Julie Jones</h5>
           <img src="/ArrowDown_Light.svg" alt="arrow-down" />
         </button>
         <img
