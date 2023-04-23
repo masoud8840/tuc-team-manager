@@ -7,10 +7,16 @@
         <input type="checkbox" />
       </section>
       <section class="task_item-footer">
-        <!-- TODO: <badge/> -->
-        <p>badge symbol</p>
+        <section class="badges-container">
+          <Badge badge-type="team">Design</Badge>
+          <Badge badge-type="category">UX</Badge>
+          <Badge badge-type="urgent">Urgent</Badge>
+        </section>
         <span>Jan 15 - Nov 10</span>
       </section>
     </section>
   </section>
 </template>
+<script setup>
+import Badge from "./Badge.vue";
+</script>

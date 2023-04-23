@@ -4,6 +4,8 @@
   --text-light: #a9a9a9;
   --text-midlight: #767676;
   --text-green: #539165;
+  --teal: #569daa;
+  --red: #f45050;
 
   --header-border: #d9d9d9;
 
@@ -23,6 +25,11 @@
   font: 600 18px "Poppins";
   line-height: 27px;
   color: var(--text-light);
+}
+@mixin Badge() {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
 }
 * {
   margin: 0;
@@ -154,11 +161,33 @@ header {
         span {
           color: var(--text-light);
         }
+
+        .badges-container {
+          display: flex;
+          gap: 10px;
+        }
       }
     }
   }
 }
 
+.badge {
+  @include Badge();
+  padding: 5px 30px;
+  border-radius: var(--rd-sm);
+  &.team-badge {
+    color: var(--text-midlight) !important;
+    background-color: rgba($color: #767676, $alpha: 0.1);
+  }
+  &.category-badge {
+    color: var(--teal) !important;
+    background-color: rgba($color: #569daa, $alpha: 0.1);
+  }
+  &.urgent-badge {
+    color: var(--red) !important;
+    background-color: rgba($color: #f45050, $alpha: 0.1);
+  }
+}
 button {
   background-color: transparent;
   border: 0;
