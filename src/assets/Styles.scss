@@ -22,7 +22,7 @@
   line-height: 33px;
 }
 @mixin SubsectionTitle() {
-  font: 600 18px "Poppins";
+  font: 500 18px "Poppins";
   line-height: 27px;
   color: var(--text-light);
 }
@@ -204,4 +204,22 @@ button {
 }
 .text-dark {
   color: var(--text-dark) !important;
+}
+
+// AddTask.vue
+.add-task {
+  min-height: 70px;
+  border-radius: var(--rd-sm);
+  background: #f8f8f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  &:hover {
+    background-color: var(--text-midlight);
+    color: var(--white);
+    svg path {
+      fill: var(--white);
+    }
+  }
 }

@@ -6,10 +6,12 @@
       <ul class="tasks-list">
         <li><task-item></task-item></li>
       </ul>
+      <add-task></add-task>
     </article>
   </section>
 </template>
 
 <script setup>
 import TaskItem from "../components/UI/TaskItem.vue";
+import AddTask from "../components/UI/AddTask.vue";
 </script>
