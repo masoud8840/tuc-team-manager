@@ -132,25 +132,7 @@ header {
           font-weight: 500;
         }
         input {
-          appearance: none;
-          width: 18px;
-          height: 18px;
-          border: 2px solid var(--text-light);
-          border-radius: var(--rd-sm);
           position: relative;
-          cursor: pointer;
-          &:checked {
-            border-color: var(--text-green);
-            &::after {
-              content: "\2713";
-              font-size: 32px;
-              position: absolute;
-              top: -10px;
-              left: -1px;
-              color: var(--text-green);
-              transform: rotateZ(5deg);
-            }
-          }
         }
       }
 
@@ -193,8 +175,14 @@ button {
   border: 0;
   cursor: pointer;
 }
+// Utils
 .font-medium {
   font-weight: 500;
+}
+.text-sm {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
 }
 .text-light {
   color: var(--text-light);
@@ -277,7 +265,7 @@ dialog {
     display: flex;
   }
   gap: 5px;
-  input,
+  input:not(input[type="radio"]),
   select {
     border: 1px solid var(--header-border);
     min-height: 45px;
@@ -300,5 +288,59 @@ dialog {
   select {
     text-transform: capitalize;
     padding: 0 10px;
+  }
+}
+
+.checkbox {
+  padding: 15px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: var(--rd-sm);
+  border: 1px solid var(--header-border);
+  gap: 5px;
+  img {
+    width: 32px;
+  }
+  &:has(input[type="radio"]:checked) {
+    border-color: var(--text-green);
+  }
+  input[type="radio"] {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+  }
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
+.col-3 {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--text-light);
+  border-radius: var(--rd-sm);
+  cursor: pointer;
+  &:checked {
+    border-color: var(--text-green);
+    &::after {
+      content: "\2713";
+      font-size: 32px;
+      position: absolute;
+      top: -10px;
+      left: -1px;
+      color: var(--text-green);
+      transform: rotateZ(5deg);
+    }
   }
 }
