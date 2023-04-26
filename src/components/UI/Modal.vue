@@ -4,7 +4,7 @@
       <div class="modal-header">
         <h4>{{ props.modalTitle }}</h4>
         <button>
-          <Plus />
+          <Plus class="close-btn" />
         </button>
       </div>
       <div class="modal-body">
