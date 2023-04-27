@@ -65,7 +65,9 @@
           <option value="maedeh">Maedeh Masalan</option>
         </select>
       </div>
-      <button @click="addTask" class="submit-btn">Add To Do</button>
+      <button @click="addTask" class="submit-btn">
+        {{ addTaskStatusOutput }}
+      </button>
     </Modal>
   </teleport>
 </template>
@@ -78,13 +80,28 @@ import RadioButton from "../components/UI/RadioButton.vue";
 import SwitchButton from "../components/UI/SwitchButton.vue";
 import Urgent from "../components/icon/Urgent.vue";
 import NonUrgent from "../components/icon/NonUrgent.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const modalTeamOptions = ref(["Design", "Development", "Network", "Security"]);
+const isUrgent = ref("NonUrgent");
 const selectedTeam = ref("Design");
 function setActiveTeam(team) {
   selectedTeam.value = team;
 }
 
-const isUrgent = ref("NonUrgent");
+const addTaskStatus = ref("waitingForOperation");
+const addTaskStatusOutput = computed(() => {
+  if (addTaskStatus.value === "waitingForOperation") {
+    return "Add Task";
+  }
+  if (addTaskStatus.value === "pending") {
+    return "Submiting Request!";
+  }
+  if (addTaskStatus.value === "success") {
+    return "Add Task Succeeded";
+  }
+});
+function addTask() {
+  console.log("Adding the specific Task");
+}
 </script>
