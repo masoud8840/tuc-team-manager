@@ -6,12 +6,12 @@
       <ul class="tasks-list">
         <li><task-item></task-item></li>
       </ul>
-      <add-task></add-task>
+      <AddTask @click="toggleAddTaskModalVisibility" />
     </article>
   </section>
 
   <teleport to="body">
-    <Modal modal-title="Add New To Do">
+    <Modal modal-title="Add New To Do" v-model="isAddTaskModalVisible">
       <div class="input-group row">
         <label for="taskTitle">Task title</label>
         <input type="text" id="taskTitle" placeholder="What you wanna To Do?" />
@@ -65,7 +65,11 @@
           <option value="maedeh">Maedeh Masalan</option>
         </select>
       </div>
-      <button @click="addTask" class="submit-btn">
+      <button
+        @click="onAddTask"
+        class="submit-btn"
+        :disabled="addTaskStatus !== 'waitingForOperation'"
+      >
         {{ addTaskStatusOutput }}
       </button>
     </Modal>
@@ -82,6 +86,10 @@ import Urgent from "../components/icon/Urgent.vue";
 import NonUrgent from "../components/icon/NonUrgent.vue";
 import { ref, computed } from "vue";
 
+const isAddTaskModalVisible = ref(false);
+function toggleAddTaskModalVisibility() {
+  isAddTaskModalVisible.value = !isAddTaskModalVisible.value;
+}
 const modalTeamOptions = ref(["Design", "Development", "Network", "Security"]);
 const isUrgent = ref("NonUrgent");
 const selectedTeam = ref("Design");
@@ -101,7 +109,7 @@ const addTaskStatusOutput = computed(() => {
     return "Add Task Succeeded";
   }
 });
-function addTask() {
+function onAddTask() {
   console.log("Adding the specific Task");
 }
 </script>

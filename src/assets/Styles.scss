@@ -325,10 +325,6 @@ dialog {
     top: 7px;
     right: 7px;
   }
-  &:disabled {
-    pointer-events: none;
-    opacity: 0.5;
-  }
 }
 
 input[type="checkbox"],
@@ -355,7 +351,7 @@ input[type="radio"] {
 
 // SwitchButton.Vue
 .switch-button {
-  min-height: 45px;
+  height: 45px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -400,4 +396,30 @@ input[type="radio"] {
   align-items: center;
   justify-content: center;
   padding: 10px 0;
+}
+
+[disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.modal-enter-active {
+  animation: FadeInModal 0.5s;
+}
+
+// No need to leave state
+// .modal-leave-active {
+//   animation: FadeOutdal 0.5s;
+// }
+
+@keyframes FadeInModal {
+  0% {
+    scale: 0;
+  }
+  75% {
+    scale: 1.05;
+  }
+  100% {
+    scale: 1;
+  }
 }
