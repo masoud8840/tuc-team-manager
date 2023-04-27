@@ -1,12 +1,29 @@
 <template>
   <section class="todo-view container">
     <h1>Tasks</h1>
-    <article class="single-member-tasks">
-      <h3 class="member-name">Masoud</h3>
-      <ul class="tasks-list">
-        <li><task-item></task-item></li>
+    <article
+      class="single-member-tasks"
+      v-for="(member, index) in todoAppDatasets"
+      :key="index"
+    >
+      <h3 class="member-name">
+        {{ member.memberName }}
+      </h3>
+      <ul class="tasks-list" v-if="member.todos.length > 0">
+        <li v-for="todo in member.todos" :key="todo.id">
+          <task-item
+            :task-title="todo.title"
+            :task-team="todo.team"
+            :task-category="todo.category"
+            :urgent="todo.isUrgent"
+            :is-checked="todo.isChecked"
+          ></task-item>
+        </li>
       </ul>
-      <AddTask @click="toggleAddTaskModalVisibility" />
+      <h4 v-else>
+        There is no assigned task to {{ member.memberName }}, all done.
+      </h4>
+      <AddTask @click="toggleAddTaskModalVisibility(member.memberName)" />
     </article>
   </section>
 
@@ -14,7 +31,12 @@
     <Modal modal-title="Add New To Do" v-model="isAddTaskModalVisible">
       <div class="input-group row">
         <label for="taskTitle">Task title</label>
-        <input type="text" id="taskTitle" placeholder="What you wanna To Do?" />
+        <input
+          type="text"
+          id="taskTitle"
+          placeholder="What you wanna To Do?"
+          v-model="todo.title"
+        />
       </div>
       <div class="input-group row">
         <label>Team</label>
@@ -24,7 +46,7 @@
             :key="index"
             name="team"
             :value="team"
-            v-model="selectedTeam"
+            v-model="todo.team"
             @click="setActiveTeam(team)"
             :disabled="index === 3"
           >
@@ -37,13 +59,13 @@
         <label for="categoryInput">Category</label>
         <div class="input-group column">
           <div class="input-group">
-            <input type="text" id="categoryInput" />
+            <input type="text" id="categoryInput" v-model="todo.category" />
           </div>
           <div class="input-group bottom">
             <SwitchButton
               true-value="Urgent"
               false-value="NonUrgent"
-              v-model="isUrgent"
+              v-model="todo.isUrgent"
             >
               <template #trueValue>
                 <Urgent />
@@ -59,7 +81,7 @@
       </div>
       <div class="input-group row">
         <label for="assignedTo">Assigned to</label>
-        <select id="assignedTo" disabled>
+        <select id="assignedTo" disabled v-model="todo.assignedTo">
           <option value="masoud">Masoud Gharedaghi</option>
           <option value="abolfazl">Abolfazl Bakhsh Por</option>
           <option value="maedeh">Maedeh Masalan</option>
@@ -84,17 +106,25 @@ import RadioButton from "../components/UI/RadioButton.vue";
 import SwitchButton from "../components/UI/SwitchButton.vue";
 import Urgent from "../components/icon/Urgent.vue";
 import NonUrgent from "../components/icon/NonUrgent.vue";
+import useAddTask from "../composable/addTask";
 import { ref, computed } from "vue";
 
 const isAddTaskModalVisible = ref(false);
-function toggleAddTaskModalVisibility() {
+function toggleAddTaskModalVisibility(memberName) {
   isAddTaskModalVisible.value = !isAddTaskModalVisible.value;
+  todo.value.assignedTo = memberName;
 }
 const modalTeamOptions = ref(["Design", "Development", "Network", "Security"]);
-const isUrgent = ref("NonUrgent");
-const selectedTeam = ref("Design");
+const todo = ref({
+  title: "",
+  team: "Design",
+  category: "",
+  assignedTo: "masoud",
+  isUrgent: "NonUrgent",
+  isChecked: false,
+});
 function setActiveTeam(team) {
-  selectedTeam.value = team;
+  todo.value.team = team;
 }
 
 const addTaskStatus = ref("waitingForOperation");
@@ -106,10 +136,42 @@ const addTaskStatusOutput = computed(() => {
     return "Submiting Request!";
   }
   if (addTaskStatus.value === "success") {
+    setTimeout(() => {
+      addTaskStatus.value = "waitingForOperation";
+    }, 3000);
     return "Add Task Succeeded";
   }
 });
-function onAddTask() {
-  console.log("Adding the specific Task");
-}
+
+const { error, addTask } = useAddTask();
+const onAddTask = async () => {
+  addTaskStatus.value = "pending";
+  await addTask(todo.value);
+  addTaskStatus.value = "success";
+};
+
+const todoAppDatasets = ref([
+  {
+    memberName: "masoud",
+    todos: [
+      {
+        id: 1,
+        title: "Improving the UX user flow from session #322",
+        team: "Design",
+        category: "UX",
+        assignedTo: "masoud",
+        isUrgent: "NonUrgent",
+        isChecked: false,
+      },
+    ],
+  },
+  {
+    memberName: "abolfazl",
+    todos: [],
+  },
+  {
+    memberName: "maedeh",
+    todos: [],
+  },
+]);
 </script>

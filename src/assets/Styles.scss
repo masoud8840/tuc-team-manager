@@ -25,6 +25,7 @@
   font: 500 18px "Poppins";
   line-height: 27px;
   color: var(--text-light);
+  text-transform: capitalize;
 }
 @mixin Badge() {
   font-size: 14px;
@@ -204,6 +205,8 @@ button {
   align-items: center;
   justify-content: center;
   gap: 15px;
+  margin-bottom: 50px;
+
   &:hover {
     background-color: var(--text-midlight);
     color: var(--white);
