@@ -14,7 +14,9 @@
             Urgent
           </Badge>
         </section>
-        <span>Jan 15 - Nov 10</span>
+        <span>
+          {{ formatDate(new Date()) }} - {{ formatDate(props.doUntill) }}
+        </span>
       </section>
     </section>
   </section>
@@ -27,5 +29,13 @@ const props = defineProps([
   "taskTeam",
   "taskCategory",
   "urgent",
+  "doUntill",
 ]);
+
+function formatDate(date) {
+  return new Date(date).toLocaleDateString("en-us", {
+    day: "2-digit",
+    month: "short",
+  });
+}
 </script>

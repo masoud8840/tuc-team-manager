@@ -33,18 +33,6 @@ const getTasks = () => {
       getTasksError.value = e.message;
     }
   );
-
-  // const querySnapshot = await getDocs(collection(firestore, "ToDo"))
-  //   .then((res) => {
-  //     console.log("Res: ", res);
-  //   })
-  //   .catch((e) => {
-  //     getTasksError.value = e.message;
-  //   });
-
-  // querySnapshot.forEach((doc) => {
-  //   tasks.value.push(doc.data());
-  // });
 };
 
 function useGetTasks() {

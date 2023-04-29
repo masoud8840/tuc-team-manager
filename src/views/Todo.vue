@@ -17,6 +17,7 @@
             :task-category="todo.category"
             :urgent="todo.isUrgent"
             :is-checked="todo.isChecked"
+            :do-untill="todo.doUntill"
           ></task-item>
         </li>
       </ul>
@@ -79,13 +80,19 @@
           </div>
         </div>
       </div>
-      <div class="input-group row">
-        <label for="assignedTo">Assigned to</label>
-        <select id="assignedTo" disabled v-model="todo.assignedTo">
-          <option value="masoud">Masoud Gharedaghi</option>
-          <option value="abolfazl">Abolfazl Bakhsh Por</option>
-          <option value="maedeh">Maedeh Masalan</option>
-        </select>
+      <div class="input-group column">
+        <div class="input-group row">
+          <label for="assignedTo">Assigned to</label>
+          <select id="assignedTo" disabled v-model="todo.assignedTo">
+            <option value="masoud">Masoud Gharedaghi</option>
+            <option value="abolfazl">Abolfazl Bakhsh Por</option>
+            <option value="maedeh">Maedeh Masalan</option>
+          </select>
+        </div>
+        <div class="input-group row">
+          <label for="todoUntill">Untill</label>
+          <input type="date" id="todoUntill" v-model="todo.doUntill" />
+        </div>
       </div>
       <button
         @click="onAddTask"
@@ -125,6 +132,7 @@ const todo = ref({
   assignedTo: "masoud",
   isUrgent: "NonUrgent",
   isChecked: false,
+  doUntill: "",
 });
 function setActiveTeam(team) {
   todo.value.team = team;
@@ -149,6 +157,7 @@ const addTaskStatusOutput = computed(() => {
         assignedTo: "masoud",
         isUrgent: "NonUrgent",
         isChecked: false,
+        doUntill: "",
       };
     }, 3000);
     return "Add Task Succeeded";
@@ -161,33 +170,9 @@ const addTaskStatusOutput = computed(() => {
 const { addTaskError, addTask } = useAddTask();
 const onAddTask = async () => {
   addTaskStatus.value = "pending";
+  console.log(todo.value);
   await addTask(todo.value);
   if (addTaskError.value) addTaskStatus.value = "failed";
   else addTaskStatus.value = "success";
 };
-
-const todoAppDatasets = ref([
-  {
-    memberName: "masoud",
-    todos: [
-      {
-        id: 1,
-        title: "Improving the UX user flow from session #322",
-        team: "Design",
-        category: "UX",
-        assignedTo: "masoud",
-        isUrgent: "NonUrgent",
-        isChecked: false,
-      },
-    ],
-  },
-  {
-    memberName: "abolfazl",
-    todos: [],
-  },
-  {
-    memberName: "maedeh",
-    todos: [],
-  },
-]);
 </script>

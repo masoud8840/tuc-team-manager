@@ -4,7 +4,7 @@
       <section class="modal-inner" v-if="modalVisibilityInstance">
         <div class="modal-header">
           <h4>{{ props.modalTitle }}</h4>
-          <button>
+          <button @click="toggleModal">
             <Plus class="close-btn" />
           </button>
         </div>
