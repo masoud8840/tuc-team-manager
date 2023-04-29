@@ -3,7 +3,7 @@
     <h1>Tasks</h1>
     <article
       class="single-member-tasks"
-      v-for="(member, index) in todoAppDatasets"
+      v-for="(member, index) in tasks"
       :key="index"
     >
       <h3 class="member-name">
@@ -106,9 +106,12 @@ import RadioButton from "../components/UI/RadioButton.vue";
 import SwitchButton from "../components/UI/SwitchButton.vue";
 import Urgent from "../components/icon/Urgent.vue";
 import NonUrgent from "../components/icon/NonUrgent.vue";
-import useAddTask from "../composable/addTask";
-import { ref, computed } from "vue";
+import useAddTask from "../composable/addTask.js";
+import useGetTasks from "../composable/getTasks.js";
+import { ref, computed, onMounted } from "vue";
 
+const { tasks, getTasksError, getTasks } = useGetTasks();
+getTasks();
 const isAddTaskModalVisible = ref(false);
 function toggleAddTaskModalVisibility(memberName) {
   isAddTaskModalVisible.value = !isAddTaskModalVisible.value;
@@ -138,16 +141,29 @@ const addTaskStatusOutput = computed(() => {
   if (addTaskStatus.value === "success") {
     setTimeout(() => {
       addTaskStatus.value = "waitingForOperation";
+      isAddTaskModalVisible.value = false;
+      todo.value = {
+        title: "",
+        team: "Design",
+        category: "",
+        assignedTo: "masoud",
+        isUrgent: "NonUrgent",
+        isChecked: false,
+      };
     }, 3000);
     return "Add Task Succeeded";
   }
+  if (addTaskStatus.value === "failed") {
+    return "Something went wrong! please try again later.";
+  }
 });
 
-const { error, addTask } = useAddTask();
+const { addTaskError, addTask } = useAddTask();
 const onAddTask = async () => {
   addTaskStatus.value = "pending";
   await addTask(todo.value);
-  addTaskStatus.value = "success";
+  if (addTaskError.value) addTaskStatus.value = "failed";
+  else addTaskStatus.value = "success";
 };
 
 const todoAppDatasets = ref([
