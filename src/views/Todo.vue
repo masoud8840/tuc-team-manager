@@ -118,7 +118,8 @@ import Urgent from "../components/icon/Urgent.vue";
 import NonUrgent from "../components/icon/NonUrgent.vue";
 import useAddTask from "../composable/addTask.js";
 import useGetTasks from "../composable/getTasks.js";
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onUnmounted } from "vue";
+import deleteTask from "../composable/deleteTask";
 
 const { tasks, getTasksError, getTasks } = useGetTasks();
 getTasks();
@@ -181,16 +182,13 @@ const onAddTask = async () => {
   const doUntill = new Date(todo.value.doUntill).getTime();
   todo.value.createdAt = now;
   todo.value.doUntill = doUntill;
-  console.log(todo.value);
   await addTask(todo.value);
   if (addTaskError.value) addTaskStatus.value = "failed";
   else addTaskStatus.value = "success";
 };
 
 function handleCheck(newInformations) {
-  console.log(newInformations.checkedSatus, newInformations.id)
-  const foundedTsk = tasks.value.map((tsk) => {
-    // console.log(tsk, givenID);
+  tasks.value.map((tsk) => {
     tsk.todos.map((nastedTsk) => {
       if (nastedTsk.id === newInformations.id) {
         nastedTsk.isChecked = newInformations.checkedSatus;
@@ -198,4 +196,14 @@ function handleCheck(newInformations) {
     });
   });
 }
+
+onUnmounted(() => {
+  tasks.value.map((tsk) => {
+    tsk.todos.map((nastedTsk) => {
+      if (nastedTsk.isChecked) {
+        deleteTask(nastedTsk.id);
+      }
+    });
+  });
+});
 </script>
