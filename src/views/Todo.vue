@@ -12,6 +12,7 @@
       <ul class="tasks-list" v-if="member.todos.length > 0">
         <li v-for="todo in member.todos" :key="todo.id">
           <task-item
+            :task-id="todo.id"
             :task-title="todo.title"
             :task-team="todo.team"
             :task-category="todo.category"
@@ -19,7 +20,7 @@
             :is-checked="todo.isChecked"
             :do-untill="todo.doUntill"
             :created-at="todo.createdAt"
-            @on-check="handleCheck(todo.id)"
+            @on-check="handleCheck"
           ></task-item>
         </li>
       </ul>
@@ -186,12 +187,13 @@ const onAddTask = async () => {
   else addTaskStatus.value = "success";
 };
 
-function handleCheck(givenID) {
+function handleCheck(newInformations) {
+  console.log(newInformations.checkedSatus, newInformations.id)
   const foundedTsk = tasks.value.map((tsk) => {
     // console.log(tsk, givenID);
     tsk.todos.map((nastedTsk) => {
-      if (nastedTsk.id === givenID) {
-        nastedTsk.isChecked = true;
+      if (nastedTsk.id === newInformations.id) {
+        nastedTsk.isChecked = newInformations.checkedSatus;
       }
     });
   });

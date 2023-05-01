@@ -28,6 +28,7 @@
 <script setup>
 import Badge from "./Badge.vue";
 const props = defineProps([
+  "taskId",
   "taskTitle",
   "isChecked",
   "taskTeam",
@@ -45,6 +46,6 @@ function formatDate(date) {
 }
 
 function handleCheck() {
-  emits("onCheck");
+  emits("onCheck", { checkedSatus: !props.isChecked, id: props.taskId });
 }
 </script>
