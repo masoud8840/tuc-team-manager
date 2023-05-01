@@ -15,7 +15,7 @@
           </Badge>
         </section>
         <span>
-          {{ formatDate(new Date()) }} - {{ formatDate(props.doUntill) }}
+          {{ formatDate(props.createdAt) }} - {{ formatDate(props.doUntill) }}
         </span>
       </section>
     </section>
@@ -30,6 +30,7 @@ const props = defineProps([
   "taskCategory",
   "urgent",
   "doUntill",
+  "createdAt",
 ]);
 
 function formatDate(date) {

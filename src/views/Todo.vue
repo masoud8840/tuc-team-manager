@@ -18,6 +18,7 @@
             :urgent="todo.isUrgent"
             :is-checked="todo.isChecked"
             :do-untill="todo.doUntill"
+            :created-at="todo.createdAt"
           ></task-item>
         </li>
       </ul>
@@ -133,6 +134,7 @@ const todo = ref({
   isUrgent: "NonUrgent",
   isChecked: false,
   doUntill: "",
+  createdAt: null,
 });
 function setActiveTeam(team) {
   todo.value.team = team;
@@ -158,8 +160,9 @@ const addTaskStatusOutput = computed(() => {
         isUrgent: "NonUrgent",
         isChecked: false,
         doUntill: "",
+        createdAt: null,
       };
-    }, 3000);
+    }, 2000);
     return "Add Task Succeeded";
   }
   if (addTaskStatus.value === "failed") {
@@ -170,6 +173,10 @@ const addTaskStatusOutput = computed(() => {
 const { addTaskError, addTask } = useAddTask();
 const onAddTask = async () => {
   addTaskStatus.value = "pending";
+  const now = new Date().getTime();
+  const doUntill = new Date(todo.value.doUntill).getTime();
+  todo.value.createdAt = now;
+  todo.value.doUntill = doUntill;
   console.log(todo.value);
   await addTask(todo.value);
   if (addTaskError.value) addTaskStatus.value = "failed";
