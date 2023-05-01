@@ -64,6 +64,7 @@ header {
   left: 0;
   border-bottom: 1px solid var(--header-border);
   backdrop-filter: blur(3px);
+  z-index: 20;
   nav {
     display: flex;
     align-items: center;
@@ -413,7 +414,7 @@ input[type="radio"] {
   padding: 10px 0;
 }
 
-[disabled] {
+[disabled="true"] {
   pointer-events: none;
   opacity: 0.5;
 }

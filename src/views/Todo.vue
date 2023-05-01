@@ -19,6 +19,7 @@
             :is-checked="todo.isChecked"
             :do-untill="todo.doUntill"
             :created-at="todo.createdAt"
+            @on-check="handleCheck(todo.id)"
           ></task-item>
         </li>
       </ul>
@@ -127,6 +128,7 @@ function toggleAddTaskModalVisibility(memberName) {
 }
 const modalTeamOptions = ref(["Design", "Development", "Network", "Security"]);
 const todo = ref({
+  id: null,
   title: "",
   team: "Design",
   category: "",
@@ -153,6 +155,7 @@ const addTaskStatusOutput = computed(() => {
       addTaskStatus.value = "waitingForOperation";
       isAddTaskModalVisible.value = false;
       todo.value = {
+        id: null,
         title: "",
         team: "Design",
         category: "",
@@ -182,4 +185,15 @@ const onAddTask = async () => {
   if (addTaskError.value) addTaskStatus.value = "failed";
   else addTaskStatus.value = "success";
 };
+
+function handleCheck(givenID) {
+  const foundedTsk = tasks.value.map((tsk) => {
+    // console.log(tsk, givenID);
+    tsk.todos.map((nastedTsk) => {
+      if (nastedTsk.id === givenID) {
+        nastedTsk.isChecked = true;
+      }
+    });
+  });
+}
 </script>
