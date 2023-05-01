@@ -26,6 +26,7 @@ const getTasks = () => {
           if (doc.data().assignedTo === tsk.memberName) {
             tsk.todos.push(doc.data());
           }
+          tsk.todos.sort((a, b) => a.createdAt + b.createdAt);
         });
       });
     },
