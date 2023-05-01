@@ -39,7 +39,7 @@
           type="text"
           id="taskTitle"
           placeholder="What you wanna To Do?"
-          v-model="todo.title"
+          v-model.trim="todo.title"
         />
       </div>
       <div class="input-group row">
@@ -63,7 +63,11 @@
         <label for="categoryInput">Category</label>
         <div class="input-group column">
           <div class="input-group">
-            <input type="text" id="categoryInput" v-model="todo.category" />
+            <input
+              type="text"
+              id="categoryInput"
+              v-model.trim="todo.category"
+            />
           </div>
           <div class="input-group bottom">
             <SwitchButton
@@ -86,7 +90,7 @@
       <div class="input-group column">
         <div class="input-group row">
           <label for="assignedTo">Assigned to</label>
-          <select id="assignedTo" disabled v-model="todo.assignedTo">
+          <select id="assignedTo" disabled="true" v-model="todo.assignedTo">
             <option value="masoud">Masoud Gharedaghi</option>
             <option value="abolfazl">Abolfazl Bakhsh Por</option>
             <option value="maedeh">Maedeh Masalan</option>
@@ -94,7 +98,7 @@
         </div>
         <div class="input-group row">
           <label for="todoUntill">Untill</label>
-          <input type="date" id="todoUntill" v-model="todo.doUntill" />
+          <input type="date" id="todoUntill" v-model.trim="todo.doUntill" />
         </div>
       </div>
       <button
@@ -146,6 +150,11 @@ function setActiveTeam(team) {
 
 const addTaskStatus = ref("waitingForOperation");
 const addTaskStatusOutput = computed(() => {
+  function toggleStatus(value) {
+    setTimeout(() => {
+      addTaskStatus.value = value;
+    }, 2000);
+  }
   if (addTaskStatus.value === "waitingForOperation") {
     return "Add Task";
   }
@@ -153,30 +162,37 @@ const addTaskStatusOutput = computed(() => {
     return "Submiting Request!";
   }
   if (addTaskStatus.value === "success") {
-    setTimeout(() => {
-      addTaskStatus.value = "waitingForOperation";
-      isAddTaskModalVisible.value = false;
-      todo.value = {
-        id: null,
-        title: "",
-        team: "Design",
-        category: "",
-        assignedTo: "masoud",
-        isUrgent: "NonUrgent",
-        isChecked: false,
-        doUntill: "",
-        createdAt: null,
-      };
-    }, 2000);
+    toggleStatus("waitingForOperation");
+    isAddTaskModalVisible.value = false;
+    todo.value = {
+      id: null,
+      title: "",
+      team: "Design",
+      category: "",
+      assignedTo: "masoud",
+      isUrgent: "NonUrgent",
+      isChecked: false,
+      doUntill: "",
+      createdAt: null,
+    };
     return "Add Task Succeeded";
   }
   if (addTaskStatus.value === "failed") {
+    toggleStatus("waitingForOperation");
     return "Something went wrong! please try again later.";
   }
 });
 
 const { addTaskError, addTask } = useAddTask();
 const onAddTask = async () => {
+  if (
+    todo.value.title === "" ||
+    todo.value.category === "" ||
+    todo.value.doUntill === ""
+  ) {
+    addTaskStatus.value = "failed";
+    return;
+  }
   addTaskStatus.value = "pending";
   const now = new Date().getTime();
   const doUntill = new Date(todo.value.doUntill).getTime();

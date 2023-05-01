@@ -4,7 +4,7 @@
       <section class="modal-inner" v-if="modalVisibilityInstance">
         <div class="modal-header">
           <h4>{{ props.modalTitle }}</h4>
-          <button @click="toggleModal">
+          <button @click="toggleModal" class="close-modal-btn">
             <Plus class="close-btn" />
           </button>
         </div>
@@ -24,9 +24,13 @@ const emits = defineEmits(["update:modelValue"]);
 const modalVisibilityInstance = ref(false);
 
 function toggleModal(e) {
-  if (e.srcElement.localName === "dialog") {
+  if (
+    e.srcElement.localName === "dialog" ||
+    e.target.className === "close-modal-btn"
+  ) {
     emits("update:modelValue", false);
   }
+  console.log(e.target.className === "close-modal-btn");
 }
 
 // watch for modal visibility to change it's instance
