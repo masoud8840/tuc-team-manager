@@ -1,4 +1,9 @@
 <template>
+  <loading
+    v-model:active="isLoading"
+    background-color="gray"
+    color="#fafafa"
+  />
   <section class="todo-view container">
     <h1>Tasks</h1>
     <article
@@ -122,11 +127,17 @@ import Urgent from "../components/icon/Urgent.vue";
 import NonUrgent from "../components/icon/NonUrgent.vue";
 import useAddTask from "../composable/addTask.js";
 import useGetTasks from "../composable/getTasks.js";
-import { ref, computed, onUnmounted } from "vue";
+import { ref, computed, onUnmounted, watch } from "vue";
 import deleteTask from "../composable/deleteTask";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
 
 const { tasks, getTasksError, getTasks } = useGetTasks();
 getTasks();
+const isLoading = ref(true);
+watch(tasks, (newVal) => {
+  isLoading.value = false;
+});
 const isAddTaskModalVisible = ref(false);
 function toggleAddTaskModalVisibility(memberName) {
   isAddTaskModalVisible.value = !isAddTaskModalVisible.value;
