@@ -1,9 +1,5 @@
 <template>
-  <loading
-    v-model:active="isLoading"
-    background-color="gray"
-    color="#fafafa"
-  />
+  <loading v-model:active="isLoading" background-color="gray" color="#fafafa" />
   <section class="todo-view container">
     <h1>Tasks</h1>
     <article
@@ -125,9 +121,10 @@ import RadioButton from "../components/UI/RadioButton.vue";
 import SwitchButton from "../components/UI/SwitchButton.vue";
 import Urgent from "../components/icon/Urgent.vue";
 import NonUrgent from "../components/icon/NonUrgent.vue";
-import useAddTask from "../composable/addTask.js";
-import useGetTasks from "../composable/getTasks.js";
 import { ref, computed, onUnmounted, watch } from "vue";
+import useGetTasks from "../composable/getTasks.js";
+import useAddTask from "../composable/addTask.js";
+import getUpdateTask from "../composable/updateTask";
 import deleteTask from "../composable/deleteTask";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
@@ -219,6 +216,7 @@ function handleCheck(newInformations) {
     tsk.todos.map((nastedTsk) => {
       if (nastedTsk.id === newInformations.id) {
         nastedTsk.isChecked = newInformations.checkedSatus;
+        updateChecked(newInformations.id, newInformations.checkedSatus);
       }
     });
   });
@@ -233,4 +231,9 @@ onUnmounted(() => {
     });
   });
 });
+
+async function updateChecked(givenID, isChecked) {
+  const update = getUpdateTask();
+  await update(givenID, isChecked);
+}
 </script>
