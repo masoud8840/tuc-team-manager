@@ -9,3 +9,9 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 ### Knows Issue
 
 adding new task after checking a task as done and before leaving the route will get lastest snapshot from firebase which the tasks you checked as done is not checked as done (restoring checked task to unchecked)
+
+### UI File
+[Open link with figma](https://www.figma.com/file/G3DlV9rzcOMnoY1zFYCU4m/TUC-Todos?type=design&node-id=0%3A1&t=TwAD37roeVBaNO9n-1)
+
+
+Design & Developed with <3
