@@ -1,16 +1,22 @@
-# Vue 3 + Vite
+# TUC Team Manager
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+### Project setup
+```
+npm install
+```
 
-## Recommended IDE Setup
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+### Compiles and minifies for production
+```
+npm run build
+```
 
-### Knows Issue
 
-adding new task after checking a task as done and before leaving the route will get lastest snapshot from firebase which the tasks you checked as done is not checked as done (restoring checked task to unchecked)
-
-# UI Mockup
+### UI Mockup
 [Open link with figma](https://www.figma.com/file/G3DlV9rzcOMnoY1zFYCU4m/TUC-Todos?type=design&node-id=0%3A1&t=TwAD37roeVBaNO9n-1)
 
 
